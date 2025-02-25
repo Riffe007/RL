@@ -1,51 +1,62 @@
-# VAE1
-This is a Variational AutoEncoder
+Original Project: Augmented Random Search (ARS) Reinforcement Learning (RL) Framework
 
-#**Variational AutoEncoder (VAE)**
+📌 Overview
 
-A Variational AutoEncoder (VAE) is a generative model that is able to learn a compact representation of data. It consists of two main components: an encoder network and a decoder network. The encoder network takes in data and maps it to a lower-dimensional representation, or latent space, and the decoder network maps this representation back to the original data space.
+This project is an Augmented Random Search (ARS) reinforcement learning implementation, focused on training robotic agents in PyBullet environments. It includes custom-built environments, robot locomotion simulators, and manually implemented ARS-based policy updates using NumPy.
 
-#**How it works**
+The framework is designed for continuous control tasks, such as locomotion and robotic manipulation, using a simple linear policy gradient update approach.
 
-The VAE is trained by maximizing the lower bound on the marginal likelihood of the data. This is done by introducing a latent variable z and assuming a Gaussian prior over it. The encoder network outputs the parameters of the approximate posterior of z, and the decoder network takes in a sample from this approximate posterior and outputs the parameters of the likelihood of the data. During training, the VAE is able to learn a compact representation of the data by optimizing the parameters of both the encoder and decoder networks.
+🚀 Features
 
-#**Usage**
+✅ ARS-based RL Training – Implements Augmented Random Search to optimize policies.✅ Custom PyBullet Environments – Includes locomotion and robotic manipulation simulations.✅ Manual State Normalization – Uses a custom normalizer to stabilize training.✅ Single-Threaded Execution – Training runs in a single process.✅ Basic Logging System – Uses print() statements for monitoring performance.✅ Hardcoded Gym Wrappers – Custom environment wrappers for Gym and PyBullet.
 
-Here's an example of how to use the VAE:
+📂 Directory Structure
+```plaintext
+ARS-RL-Project/
+│── agents/                     # ARS RL Training Code
+│   ├── ars.py                  # Main ARS Algorithm
+│
+│── environments/                # PyBullet-based Custom Environments
+│   ├── env_bases.py
+│   ├── gym_locomotion_envs.py
+│   ├── gym_manipulator_envs.py
+│   ├── gym_pendulum_envs.py
+│
+│── robots/                      # Custom Robot Models
+│   ├── robot_bases.py
+│   ├── robot_locomotors.py
+│   ├── robot_manipulators.py
+│   ├── robot_pendula.py
+│
+│── scenes/                      # Simulation Scenes
+│   ├── scene_abstract.py
+│   ├── scene_stadium.py
+│
+│── tools/                       # Additional Helpers
+│   ├── kerasrl_utils.py         # Keras RL integration
+│
+│── logs/                        # Training Logs
+│
+│── brs/monitor/                 # Performance Monitoring
+│
+│── README.md                    # Documentation
+```
+💾 Installation
 
-Copy code
-from vae import VAE
+pip install numpy gym pybullet
 
-# Initialize the VAE model
+🛠️ Usage
 
-model = VAE()
+Run ARS training on HalfCheetahBulletEnv:
 
-# Train the model on your data
-model.train(data)
+python agents/ars.py
 
-# Use the model to generate new data
-generated_data = model.generate()
+🔬 Limitations
 
-#**Input**
+🚫 Outdated PyBullet-based environments (Gymnasium/MuJoCo are now standard).
 
-The VAE expects your data to be provided in the form of a numpy array with shape (num_samples, num_features).
+🚫 No parallelization or multi-GPU support (single-threaded).
 
-#**Output**
+🚫 No advanced RL techniques (pure ARS, no PPO/SAC).
 
-The generate function of the VAE outputs a numpy array with the same shape as the input data, where each element is a generated sample from the trained model.
-
-Hyperparameters
-VAE comes with some default hyperparameters. It's also possible to specify them during initialization. Such as :
-
-Copy code
-model = VAE(latent_dim=20, learning_rate=1e-3, batch_size=32, epochs=100)
-latent_dim : Dimensionality of the latent space.
-learning_rate : Learning rate for the optimizer.
-batch_size : Number of samples in each training batch.
-epochs : Number of training epochs.
-The specific implementation and architecture of the VAE can vary, so be sure to check the documentation for any additional arguments or options that may be available.
-
-#**Conclusion**
-
-VAE is one of the most well-know generative models with its own merit and demerit compare to other generative models. It's great for learning compact representation of data and to use the represenation for downstream task like anomaly detection.
-Also, it is relatively simple to implement and offers a way to generate new data that is similar to the training data. However, VAE may not be the best choice for certain types of data or problem and It's always good to compare the performance with other generative models as well.
+🚫 Logging is minimal (no TensorBoard, WandB).
